@@ -64,19 +64,18 @@ module.exports.loop = function () {
     console.log('Upgrader: ' + upgraders.length);
     console.log('Harvesters: ' + harvesters.length);
     console.log('Builders: ' +builders.length);
-
     
-    if(harvesters.length < 4 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns["Com"].energy) {
+    if(harvesters.length < 5 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns["Com"].energy) {
         var newName = 'Harvester' + Game.time;
         console.log('Spawning new harvester: ' + newName);
         Game.spawns['Com'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
     }
-    if(upgraders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns["Com"].energy) {
+    else if(upgraders.length < 3 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns["Com"].energy) {
         var newName = 'Upgrader' + Game.time;
         console.log('Spawning new upgrader: ' + newName);
         Game.spawns['Com'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader'}});
     }
-    if(builders.length < 1 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns["Com"].energy) {
+    else if(builders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns["Com"].energy) {
         var newName = 'Builder' + Game.time;
         console.log('Spawning new builder: ' + newName);
         Game.spawns['Com'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
