@@ -8,6 +8,22 @@ function bodyCost (body) {
     }, 0);
 }
 
+function criarRuas(){
+    for(var spName in Game.spawns){
+        var sp = Game.spawns[spName];
+        var posX  = sp.pos.x;
+        var posY = sp.pos.y;
+        var sources = sp.room.find(FIND_SOURCES);
+        for (var j = 0; j < sources.length; j++)
+        {
+            var blocos = sp.pos.findPathTo(sources[j].pos);
+            for (var i = 0; i < blocos.length; i++) 
+            {
+                sp.room.createConstructionSite(blocos[i].x,blocos[i].y, STRUCTURE_ROAD);
+            }
+        }
+    }
+}
 
 function inicializarSpawn(spawnName){
     for(var spName in Game.spawns){
@@ -26,7 +42,8 @@ function inicializarSpawn(spawnName){
 }
 
 module.exports = {
-    init: inicializarSpawn
+    init: inicializarSpawn,
+    ruas: criarRuas
 }
 
 module.exports.loop = function () {
@@ -46,10 +63,10 @@ module.exports.loop = function () {
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
     console.log('Upgrader: ' + upgraders.length);
     console.log('Harvesters: ' + harvesters.length);
-    console.log('Builders: ' + harvesters.length);
+    console.log('Builders: ' +builders.length);
 
     
-    if(harvesters.length < 3 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns["Com"].energy) {
+    if(harvesters.length < 4 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns["Com"].energy) {
         var newName = 'Harvester' + Game.time;
         console.log('Spawning new harvester: ' + newName);
         Game.spawns['Com'].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
@@ -73,11 +90,16 @@ module.exports.loop = function () {
             Game.spawns['Com'].pos.y, 
             {align: 'left', opacity: 0.8});
     }
-
+    var sourceAtual=0;
     for(var name in Game.creeps) {
         var creep = Game.creeps[name];
         if(creep.memory.role == 'harvester') {
-            roleHarvester.run(creep);
+            var sources = creep.room.find(FIND_SOURCES);
+            roleHarvester.run(creep,sourceAtual);
+            sourceAtual++;
+            if(sourceAtual>=sources.length){
+                sourceAtual=0;
+            }
         }
         if(creep.memory.role == 'upgrader') {
             roleUpgrader.run(creep);
