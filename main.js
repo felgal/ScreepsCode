@@ -72,7 +72,10 @@ module.exports.loop = function () {
     }
 	
 	var nomeSpawn = "Spawn";
+<<<<<<< HEAD
     var superharvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'superharvester');
+=======
+>>>>>>> 71956441e723425064991c4c21af59f18a7b4d96
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
@@ -81,6 +84,7 @@ module.exports.loop = function () {
     console.log('Super-Harvesters: ' + superharvester.length);
     console.log('Builders: ' +builders.length);
     
+<<<<<<< HEAD
     if(superharvester.length < 1 && bodyCost([WORK,WORK,WORK,WORK,WORK,,MOVE])<=Game.spawns[nomeSpawn].energy) {
         var newName = 'Super-Harvester' + Game.time;
         console.log('Spawning new super-harvester: ' + newName);
@@ -96,6 +100,20 @@ module.exports.loop = function () {
         
     }
     else if(upgraders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+=======
+    if(harvesters.length < 5 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+        var newName = 'Harvester' + Game.time;
+        console.log('Spawning new harvester: ' + newName);
+        var sources = Game.rooms.W27N31;
+        if(sources.energyAvailable>=bodyCost([WORK,WORK,CARRY,MOVE,MOVE])){
+            Game.spawns[nomeSpawn].spawnCreep([WORK,WORK,CARRY,MOVE,MOVE], newName, {memory: {role: 'harvester'}});
+        }
+        else{
+            Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
+        }
+    }
+    else if(upgraders.length < 3 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+>>>>>>> 71956441e723425064991c4c21af59f18a7b4d96
         var newName = 'Upgrader' + Game.time;
         console.log('Spawning new upgrader: ' + newName);
         var sources = Game.rooms.W27N31;
@@ -106,7 +124,11 @@ module.exports.loop = function () {
             Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader'}});
         }
     }
+<<<<<<< HEAD
     else if(builders.length < 1 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+=======
+    else if(builders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+>>>>>>> 71956441e723425064991c4c21af59f18a7b4d96
         var newName = 'Builder' + Game.time;
         console.log('Spawning new builder: ' + newName);
         Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
