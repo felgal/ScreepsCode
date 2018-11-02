@@ -24,6 +24,16 @@ function criarRuas(){
             }
         }
         
+        var sources = sp.room.find(FIND_MY_STRUCTURES);
+        for (var j = 0; j < sources.length; j++)
+        {
+            var blocos = sp.pos.findPathTo(sources[j].pos);
+            for (var i = 0; i < blocos.length-1; i++) 
+            {
+                sp.room.createConstructionSite(blocos[i].x,blocos[i].y, STRUCTURE_ROAD);
+            }
+        }
+        
         var sources = Game.rooms.W27N31.controller;
         var blocos = sp.pos.findPathTo(sources.pos);
         console.log(sources.pos);
@@ -43,13 +53,29 @@ function inicializarSpawn(spawnName){
         var posY = sp.pos.y;
         
         Game.rooms[sp.room.name].createConstructionSite(posX-1, posY-1, STRUCTURE_EXTENSION);
-        Game.rooms[sp.room.name].createConstructionSite(posX-1, posY, STRUCTURE_EXTENSION);
         Game.rooms[sp.room.name].createConstructionSite(posX-1, posY+1, STRUCTURE_EXTENSION);
         
         
         Game.rooms[sp.room.name].createConstructionSite(posX-2, posY-1, STRUCTURE_EXTENSION);
-        Game.rooms[sp.room.name].createConstructionSite(posX-2, posY, STRUCTURE_EXTENSION);
-        Game.rooms[sp.room.name].createConstructionSite(posX-2, posY-1, STRUCTURE_EXTENSION);
+        Game.rooms[sp.room.name].createConstructionSite(posX-2, posY+1, STRUCTURE_EXTENSION);
+        
+        Game.rooms[sp.room.name].createConstructionSite(posX-3, posY-1, STRUCTURE_EXTENSION);
+        Game.rooms[sp.room.name].createConstructionSite(posX-3, posY+1, STRUCTURE_EXTENSION);
+        
+        
+        Game.rooms[sp.room.name].createConstructionSite(posX-4, posY-1, STRUCTURE_EXTENSION);
+        Game.rooms[sp.room.name].createConstructionSite(posX-4, posY+1, STRUCTURE_EXTENSION);
+        
+        
+        Game.rooms[sp.room.name].createConstructionSite(posX-5, posY-1, STRUCTURE_EXTENSION);
+        Game.rooms[sp.room.name].createConstructionSite(posX-5, posY+1, STRUCTURE_EXTENSION);
+        
+        
+        Game.rooms[sp.room.name].createConstructionSite(posX-1, posY+3, STRUCTURE_CONTAINER);
+        Game.rooms[sp.room.name].createConstructionSite(posX-2, posY+3, STRUCTURE_CONTAINER);
+        Game.rooms[sp.room.name].createConstructionSite(posX-3, posY+3, STRUCTURE_CONTAINER);
+        Game.rooms[sp.room.name].createConstructionSite(posX-4, posY+3, STRUCTURE_CONTAINER);
+        Game.rooms[sp.room.name].createConstructionSite(posX-5, posY+3, STRUCTURE_CONTAINER);
         
     }
 }
@@ -72,10 +98,7 @@ module.exports.loop = function () {
     }
 	
 	var nomeSpawn = "Spawn";
-<<<<<<< HEAD
     var superharvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'superharvester');
-=======
->>>>>>> 71956441e723425064991c4c21af59f18a7b4d96
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
@@ -84,7 +107,6 @@ module.exports.loop = function () {
     console.log('Super-Harvesters: ' + superharvester.length);
     console.log('Builders: ' +builders.length);
     
-<<<<<<< HEAD
     if(superharvester.length < 1 && bodyCost([WORK,WORK,WORK,WORK,WORK,,MOVE])<=Game.spawns[nomeSpawn].energy) {
         var newName = 'Super-Harvester' + Game.time;
         console.log('Spawning new super-harvester: ' + newName);
@@ -92,7 +114,7 @@ module.exports.loop = function () {
         Game.spawns[nomeSpawn].spawnCreep([WORK,WORK,WORK,WORK,WORK,MOVE], newName, {memory: {role: 'superharvester'}});
         
     } 
-    if(harvesters.length+superharvester.length*2 < 4 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+    if(harvesters.length+superharvester.length*2 < 6 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
         var newName = 'Harvester' + Game.time;
         console.log('Spawning new harvester: ' + newName);
         var sources = Game.rooms.W27N31;
@@ -100,20 +122,6 @@ module.exports.loop = function () {
         
     }
     else if(upgraders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
-=======
-    if(harvesters.length < 5 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
-        var newName = 'Harvester' + Game.time;
-        console.log('Spawning new harvester: ' + newName);
-        var sources = Game.rooms.W27N31;
-        if(sources.energyAvailable>=bodyCost([WORK,WORK,CARRY,MOVE,MOVE])){
-            Game.spawns[nomeSpawn].spawnCreep([WORK,WORK,CARRY,MOVE,MOVE], newName, {memory: {role: 'harvester'}});
-        }
-        else{
-            Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
-        }
-    }
-    else if(upgraders.length < 3 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
->>>>>>> 71956441e723425064991c4c21af59f18a7b4d96
         var newName = 'Upgrader' + Game.time;
         console.log('Spawning new upgrader: ' + newName);
         var sources = Game.rooms.W27N31;
@@ -124,11 +132,8 @@ module.exports.loop = function () {
             Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'upgrader'}});
         }
     }
-<<<<<<< HEAD
+
     else if(builders.length < 1 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
-=======
-    else if(builders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
->>>>>>> 71956441e723425064991c4c21af59f18a7b4d96
         var newName = 'Builder' + Game.time;
         console.log('Spawning new builder: ' + newName);
         Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
