@@ -4,9 +4,9 @@ var roleHarvester = {
     run: function(creep,sourceAtual) {
         if(creep.carry.energy < creep.carryCapacity) {
 	        var dropenergy = creep.pos.findClosestByPath(FIND_DROPPED_RESOURCES,{filter: (d) => {return (d.resourceType == RESOURCE_ENERGY)}});
-            if(dropenergy!= null && dropenergy.length != 0){
-                if(creep.pickup(dropenergy[0]) == ERR_NOT_IN_RANGE){
-                    creep.moveTo(dropenergy[0].pos);
+            if(dropenergy!= null){
+                if(creep.pickup(dropenergy) == ERR_NOT_IN_RANGE){
+                    creep.moveTo(dropenergy.pos);
                 }
             }
             else{
