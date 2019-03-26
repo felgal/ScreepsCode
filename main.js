@@ -88,7 +88,7 @@ module.exports = {
 
 module.exports.loop = function () {
 	
-	//Declaração de variaveis
+	//Declaraï¿½ï¿½o de variaveis
 	var nomeSpawn = "Spawn1";
     var superharvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'superharvester');
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
@@ -110,8 +110,6 @@ module.exports.loop = function () {
         inicial=false;
         inicializarSpawn(nomeSpawn);
     }
-	
-	
     for(var spName in Game.spawns){
         var sp = Game.spawns[spName];
         console.log("Energia atual: "+ sp.energy);
@@ -154,7 +152,7 @@ module.exports.loop = function () {
         }
     }
 
-    else if(builders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+    else if(builders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy && Game.constructionSites.length!=0) {
         var newName = 'Builder' + Game.time;
         console.log('Spawning new builder: ' + newName);
         Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
