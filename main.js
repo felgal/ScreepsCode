@@ -22,7 +22,7 @@ function criarRuasSources(){
 		var creeps = sp.room.find(FIND_CREEPS);
 		
 		
-		//cria caminho do creep ate source
+	//cria caminho do creep ate source
         for (var j = 0; j < sources.length; j++)
         {
 			for( var k=0; k<creeps.length; k++){
@@ -96,14 +96,14 @@ module.exports.loop = function () {
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
 	
 	//funcao que serve para criar ruas dinamicamente conforme o movimento dos creeps
-	if(criaruastempo == 1000){
+	/*if(criaruastempo == 1000){
 		criarRuasSources();
 		criarruastempo=0;
 		console.log("Cria ruas");
 	}
 	else{
 		criaruastempo+=1;
-	}
+	}*/
 	
 	//funcao que inicializa, no momento so serve para criar as baterias
     if(inicial){
