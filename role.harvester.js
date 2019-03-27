@@ -7,6 +7,7 @@ var roleHarvester = {
             if(dropenergy!= null){
                 if(creep.pickup(dropenergy) == ERR_NOT_IN_RANGE){
                     creep.moveTo(dropenergy.pos);
+		    creep.room.createConstructionSite(creep.pos.x,creep.pos.y, STRUCTURE_ROAD);
                 }
             }
             else{
@@ -14,6 +15,7 @@ var roleHarvester = {
                 
                 if(creep.harvest(sources[sourceAtual]) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(sources[sourceAtual], {visualizePathStyle: {stroke: '#ffaa00'}});
+		    creep.room.createConstructionSite(creep.pos.x,creep.pos.y, STRUCTURE_ROAD);
                 }
             }
         }
@@ -27,6 +29,7 @@ var roleHarvester = {
             if(targets.length > 0) {
                 if(creep.transfer(targets[0], RESOURCE_ENERGY) == ERR_NOT_IN_RANGE) {
                     creep.moveTo(targets[0], {visualizePathStyle: {stroke: '#ffffff'}});
+		    creep.room.createConstructionSite(creep.pos.x,creep.pos.y, STRUCTURE_ROAD);
                 }
             }
         }
