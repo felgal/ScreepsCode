@@ -12,6 +12,25 @@ function bodyCost (body) {
     }, 0);
 }
 
+//cria ruas entre os sources e spawns
+function criarRuas(){
+    for(var spName in Game.spawns){
+        var sp = Game.spawns[spName];
+        var posX  = sp.pos.x;
+        var posY = sp.pos.y;
+        var sources = sp.room.find(FIND_SOURCES);
+        for (var j = 0; j < sources.length; j++)
+        {
+            var blocos = sp.pos.findPathTo(sources[j].pos);
+            for (var i = 1; i < blocos.length-1; i++) 
+            {
+                sp.room.createConstructionSite(blocos[i].x,blocos[i].y, STRUCTURE_ROAD);
+            }
+        }
+        
+    }
+}
+
 //cria as ruas a partir dos creeps, ate o source e spawns
 function criarRuasSources(){
     for(var spName in Game.spawns){
@@ -87,13 +106,16 @@ module.exports = {
 }
 
 module.exports.loop = function () {
-	
 	//Declara��o de variaveis
 	var nomeSpawn = "Spawn1";
     var superharvester = _.filter(Game.creeps, (creep) => creep.memory.role == 'superharvester');
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
+    var quantBuilder=3;
+    var quantHarvester = 8;
+    var quantSuperHarvester = 1;
+    var quantUpgrader= 2;
 	
 	//funcao que serve para criar ruas dinamicamente conforme o movimento dos creeps
 	/*if(criaruastempo == 1000){
@@ -109,6 +131,7 @@ module.exports.loop = function () {
     if(inicial){
         inicial=false;
         inicializarSpawn(nomeSpawn);
+        criarRuas();
     }
     for(var spName in Game.spawns){
         var sp = Game.spawns[spName];
@@ -126,21 +149,21 @@ module.exports.loop = function () {
     console.log('Super-Harvesters: ' + superharvester.length);
     console.log('Builders: ' +builders.length);
     
-    if(superharvester.length < 1 && bodyCost([WORK,WORK,WORK,WORK,WORK,,MOVE])<=Game.spawns[nomeSpawn].energy) {
+    if(superharvester.length < quantSuperHarvester && bodyCost([WORK,WORK,WORK,WORK,WORK,,MOVE])<=Game.spawns[nomeSpawn].energy) {
         var newName = 'Super-Harvester' + Game.time;
         console.log('Spawning new super-harvester: ' + newName);
         var sources = Game.spawns[nomeSpawn].room;
         Game.spawns[nomeSpawn].spawnCreep([WORK,WORK,WORK,WORK,WORK,MOVE], newName, {memory: {role: 'superharvester'}});
         
     } 
-    if(harvesters.length+superharvester.length*2 < 8 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+    if(harvesters.length+superharvester.length*2 < quantHarvester && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
         var newName = 'Harvester' + Game.time;
         console.log('Spawning new harvester: ' + newName);
         var sources = Game.spawns[nomeSpawn].room;
         Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
         
     }
-    else if(upgraders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+    else if(upgraders.length < quantUpgrader && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
         var newName = 'Upgrader' + Game.time;
         console.log('Spawning new upgrader: ' + newName);
         var sources = Game.spawns[nomeSpawn].room;
@@ -152,7 +175,7 @@ module.exports.loop = function () {
         }
     }
 
-    else if(builders.length < 2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy && Game.constructionSites.length!=0) {
+    else if(builders.length < quantBuilder && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy && Game.constructionSites.length!=0) {
         var newName = 'Builder' + Game.time;
         console.log('Spawning new builder: ' + newName);
         Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'builder'}});
