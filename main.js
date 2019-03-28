@@ -112,10 +112,10 @@ module.exports.loop = function () {
     var harvesters = _.filter(Game.creeps, (creep) => creep.memory.role == 'harvester');
     var upgraders = _.filter(Game.creeps, (creep) => creep.memory.role == 'upgrader');
     var builders = _.filter(Game.creeps, (creep) => creep.memory.role == 'builder');
-    var quantBuilder=3;
-    var quantHarvester = 8;
+    var quantBuilder=5;
+    var quantHarvester = 14;
     var quantSuperHarvester = 1;
-    var quantUpgrader= 2;
+    var quantUpgrader= 6;
 	
 	//funcao que serve para criar ruas dinamicamente conforme o movimento dos creeps
 	/*if(criaruastempo == 1000){
