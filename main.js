@@ -163,7 +163,7 @@ module.exports.loop = function () {
         Game.spawns[nomeSpawn].spawnCreep([WORK,CARRY,MOVE], newName, {memory: {role: 'harvester'}});
         
     }
-    else if(upgraders.length < quantUpgrader && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
+    else if(upgraders.length < quantUpgrader && harvesters.length+superharvester.length*2 > quantHarvester/2 && bodyCost([WORK,CARRY,MOVE])<=Game.spawns[nomeSpawn].energy) {
         var newName = 'Upgrader' + Game.time;
         console.log('Spawning new upgrader: ' + newName);
         var sources = Game.spawns[nomeSpawn].room;
