@@ -1,4 +1,4 @@
-var roleSuperHarvester = {
+var roleSuperCarry = {
 
     /** @param {Creep} creep **/
     run: function(creep,sourceAtual) {
@@ -25,4 +25,4 @@ var roleSuperHarvester = {
 	}
 };
 
-module.exports = roleSuperHarvester;
+module.exports = roleSuperCarry;
