@@ -3,7 +3,7 @@ var roleSuperHarvester = require('role.superharvester');
 var roleUpgrader = require('role.upgrader');
 var roleBuilder = require('role.builder');
 var inicial = true;
-var criaruastempo = 0;
+var criaruastempo = 0; 
 
 //custo total do corpo 
 function bodyCost (body) {
@@ -140,18 +140,19 @@ module.exports.loop = function () {
 	}*/
 	
 	
-	//remove as ruas criadas a serem criadas
 	
-	var thisRoom = Game.spawns["Spawn1"].room;
-	var constructionSites = thisRoom.find(FIND_CONSTRUCTION_SITES);
-		for (var siteName of constructionSites) {
-	  if (siteName.structureType == STRUCTURE_ROAD) {
-		 siteName.remove();
-	 }
-	}
 	
 	//funcao que inicializa, no momento so serve para criar as baterias
     if(inicial){
+        //remove as ruas criadas a serem criadas
+    	
+    	var thisRoom = Game.spawns["Spawn1"].room;
+    	var constructionSites = thisRoom.find(FIND_CONSTRUCTION_SITES);
+    		for (var siteName of constructionSites) {
+    	  if (siteName.structureType == STRUCTURE_ROAD) {
+    		 siteName.remove();
+    	 }
+    	}
         inicial=false;
         inicializarSpawn(nomeSpawn);
         criarRuas();
